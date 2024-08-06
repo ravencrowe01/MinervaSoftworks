@@ -1,6 +1,5 @@
 .points-ticker {
     position: fixed;
-    top: 0;
     width: 101%;
     z-index: 1;
     padding-top: 0;

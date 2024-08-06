@@ -3,8 +3,8 @@ import { Listing } from './Listing';
 import { Item } from './Item';
 import { ItemStatistics } from './ItemStatistics';
 import { NgFor, NgIf, CommonModule } from '@angular/common';
-import * as plushiesJson from '../data/plushies.json';
-import * as flowersJson from '../data/flowers.json';
+import * as plushiesJson from '../../data/plushies.json';
+import * as flowersJson from '../../data/flowers.json';
 import { IPointsMarket } from './PointsMarket';
 import { IPointsMarketEntry } from './PointMarketItem';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
@@ -31,10 +31,12 @@ export class SetDisplayComponent implements OnInit {
 
   data = [
     {
+      id: 0,
       name: "Plushies",
       json: plushiesJson.plushies.sort ((a, b) => a.name.localeCompare (b.name))
     },
     {
+      id: 1,
       name: "Flowers",
       json: flowersJson.flowers.sort ((a, b) => a.name.localeCompare (b.name))
     }
@@ -60,6 +62,7 @@ export class SetDisplayComponent implements OnInit {
 
     for (let set of this.data) {
       this.sets.push({
+        id: set.id,
         name: set.name,
         items: set.json,
         itemStatistics: [],
