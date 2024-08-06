@@ -1,0 +1,56 @@
+{
+  "plushies": [
+    {
+      "id": 186,
+      "name": "Sheep Plushie"
+    },
+    {
+      "id": 187,
+      "name": "Teddy Bear Plushie"
+    },
+    {
+      "id": 215,
+      "name": "Kitten Plushie"
+    },
+    {
+      "id": 258,
+      "name": "Jaguar Plushie"
+    },
+    {
+      "id": 261,
+      "name": "Wolverine Plushie"
+    },
+    {
+      "id": 266,
+      "name": "Nessie Plushie"
+    },
+    {
+      "id": 268,
+      "name": "Red Fox Plushie"
+    },
+    {
+      "id": 269,
+      "name": "Monkey Plushie"
+    },
+    {
+      "id": 273,
+      "name": "Chamois Plushie"
+    },
+    {
+      "id": 274,
+      "name": "Panda Plushie"
+    },
+    {
+      "id": 281,
+      "name": "Lion Plushie"
+    },
+    {
+      "id": 384,
+      "name": "Camel Plushie"
+    },
+    {
+      "id": 618,
+      "name": "Stingray Plushie"
+    }
+  ]
+}

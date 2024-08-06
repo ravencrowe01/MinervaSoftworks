@@ -1,0 +1,84 @@
+<div class="row card bg-primary points-ticker">
+    <div class="card-body pt-1 pb-1 container">
+        <div class="row">
+            <p class="col center">Point - {{ pointValue | currency : 'USD' : 'symbol' : '1.0-0' }}</p>
+            <p class="col center">Point Set - {{ pointSetValue | currency : 'USD' : 'symbol' : '1.0-0' }}</p>
+            <div class="w-50">
+                <form class="d-flex">
+                    <button class="btn btn-secondary my-2 my-sm-0 me-sm-2" type="button" for="apiKeyForm" (click)="loadData ()">Fetch</button>
+                    <input id="key-input" class="form-control w-25" type="text" placeholder="Api Key" [formControl]="apiKeyForm">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div *ngFor="let set of sets" class="row card bg-primary mb-3 mt-5">
+        <div class="card-header">
+            <h1 class="center">{{ set.name }}</h1>
+        </div>
+
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr class="table-primary">
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Avg (Top 3)</th>
+                        <th>Avg (Top 5)</th>
+                        <th>Avg (Top 10)</th>
+                        <th>Avg (Top 25)</th>
+                        <th>Avg (Top 50)</th>
+                        <th>Avg (Top 100)</th>
+                    </tr>
+                </thead>
+
+                <tbody *ngIf="set.itemStatistics.length === set.items.length; else waiting">
+                    <tr *ngFor="let item of set.itemStatistics;" class="table-primary">
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.avgTop3 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ item.avgTop5 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ item.avgTop10 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ item.avgTop25 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ item.avgTop50 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ item.avgTop100 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                    </tr>
+                </tbody>
+
+                <ng-template #waiting>
+                    <tbody>
+                        <tr *ngFor="let item of set.items" class="table-primary">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        </tr>
+                    </tbody>
+                </ng-template>
+
+                <tfoot>
+                    <tr class="table-primary">
+                        <td colspan="2"><b>Total</b></td>
+                        <td *ngFor="let total of set.itemTotals">{{ total | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                    </tr>
+
+                    <tr class="table-primary">
+                        <td colspan="2"><b>Trade-in Profit</b></td>
+                        <td *ngFor="let total of set.itemTotals">{{ pointSetValue - total | currency : 'USD' : 'symbol' : '1.0-0' }} ({{ (pointSetValue - total) / pointSetValue | percent }})</td>
+                    </tr>
+
+                    <tr class="table-primary">
+                        <td colspan="2"><b>Min Sell Value</b></td>
+                        <td *ngFor="let total of set.itemTotals">{{ total / 10 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
