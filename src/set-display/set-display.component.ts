@@ -58,14 +58,15 @@ export class SetDisplayComponent implements OnInit {
   init () : void {
     this.sets = [];
 
-    this.data.forEach(set => {
+    for (let set of this.data) {
       this.sets.push({
         name: set.name,
         items: set.json,
         itemStatistics: [],
-        itemTotals: [ 0, 0, 0, 0, 0, 0 ]
+        marketValue: 0,
+        itemTotals: [ 0, 0, 0, 0 ]
       });
-    });
+    }
   }
 
   async loadData (): Promise<void> {
@@ -88,6 +89,8 @@ export class SetDisplayComponent implements OnInit {
     else {
       for (let set of this.sets) {
         await this.buildItemsStatisticsCollection (set.items, set.itemStatistics);
+
+        set.marketValue = this.calculateSetMarketValue (set);
 
         set.itemTotals = this.calculateTotalAvgs (set.itemStatistics);
       }
@@ -126,15 +129,13 @@ export class SetDisplayComponent implements OnInit {
   }
 
   calculateTotalAvgs (items: ItemStatistics []) : number [] {
-    let tops = [ 0, 0, 0, 0, 0, 0 ]
+    let tops = [ 0, 0, 0, 0 ]
 
     items.forEach (stats => {
-      tops[0] += stats.avgTop3
-      tops[1] += stats.avgTop5
-      tops[2] += stats.avgTop10
-      tops[3] += stats.avgTop25
-      tops[4] += stats.avgTop50
-      tops[5] += stats.avgTop100
+      tops[0] += stats.topAvgs [0]
+      tops[1] += stats.topAvgs [1]
+      tops[2] += stats.topAvgs [2]
+      tops[3] += stats.topAvgs [3]
     });
 
     return tops;
@@ -149,26 +150,18 @@ export class SetDisplayComponent implements OnInit {
 
     statsCollection.sort ((a, b) => a.name.localeCompare (b.name));
 
-    let tops = [ 0, 0, 0, 0, 0, 0 ]
-
-    statsCollection.forEach (stats => {
-      tops[0] += stats.avgTop3
-      tops[1] += stats.avgTop5
-      tops[2] += stats.avgTop10
-      tops[3] += stats.avgTop25
-      tops[4] += stats.avgTop50
-      tops[5] += stats.avgTop100
-    });
   }
 
   async buildItemStatistics (item: Item): Promise<ItemStatistics> {
     let listings = await this.fetchItemListings (item.id);
 
-    return new ItemStatistics (item, listings);
+    let mv = await this.fetchItemMarketValue (item.id);
+
+    return new ItemStatistics (item, listings, mv);
   }
 
   async fetchItemListings (id: number): Promise<Listing []> {
-    let fetchUrl = this.buildItemFetchUrl (id);
+    let fetchUrl = this.buildItemListingsFetchUrl (id);
 
     let response = await fetch (fetchUrl);
 
@@ -177,8 +170,26 @@ export class SetDisplayComponent implements OnInit {
     return items;
   }
 
-  buildItemFetchUrl (id: number) : string {
+  buildItemListingsFetchUrl (id: number) : string {
     return `${this.baseUrl}${this.apiVersion}market/${id}?key=${this.apiKeyForm.value}&selections=bazaar`;
+  }
+
+  async fetchItemMarketValue (id: number) : Promise<number> {
+    let fetchUrl = `${this.baseUrl}${this.apiVersion}torn/${id}?key=${this.apiKeyForm.value}&selections=items`;
+
+    let response = await fetch (fetchUrl);
+
+    return (await response.json ())["items"][`${id}`]["market_value"];
+  }
+
+  calculateSetMarketValue (set: ItemSet) : number {
+    let mv = 0;
+
+    for (let item of  set.itemStatistics) {
+      mv += item.marketValue;
+    }
+
+    return mv;
   }
 
   calculcatePointValue () : void {

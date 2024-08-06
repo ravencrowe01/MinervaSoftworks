@@ -25,12 +25,11 @@
                     <tr class="table-primary">
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Market Value</th>
                         <th>Avg (Top 3)</th>
                         <th>Avg (Top 5)</th>
                         <th>Avg (Top 10)</th>
                         <th>Avg (Top 25)</th>
-                        <th>Avg (Top 50)</th>
-                        <th>Avg (Top 100)</th>
                     </tr>
                 </thead>
 
@@ -38,12 +37,8 @@
                     <tr *ngFor="let item of set.itemStatistics;" class="table-primary">
                         <td>{{ item.id }}</td>
                         <td>{{ item.name }}</td>
-                        <td>{{ item.avgTop3 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        <td>{{ item.avgTop5 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        <td>{{ item.avgTop10 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        <td>{{ item.avgTop25 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        <td>{{ item.avgTop50 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        <td>{{ item.avgTop100 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ item.marketValue | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td *ngFor="let avg of item.topAvgs">{{ avg | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                     </tr>
                 </tbody>
 
@@ -57,7 +52,6 @@
                             <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                             <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                             <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                            <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                         </tr>
                     </tbody>
                 </ng-template>
@@ -65,16 +59,19 @@
                 <tfoot>
                     <tr class="table-primary">
                         <td colspan="2"><b>Total</b></td>
+                        <td>{{ set.marketValue | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                         <td *ngFor="let total of set.itemTotals">{{ total | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                     </tr>
 
                     <tr class="table-primary">
                         <td colspan="2"><b>Trade-in Profit</b></td>
+                        <td>{{ pointSetValue - set.marketValue | currency : 'USD' : 'symbol' : '1.0-0' }} ({{ (pointSetValue - set.marketValue) / pointSetValue | percent }})</td>
                         <td *ngFor="let total of set.itemTotals">{{ pointSetValue - total | currency : 'USD' : 'symbol' : '1.0-0' }} ({{ (pointSetValue - total) / pointSetValue | percent }})</td>
                     </tr>
 
                     <tr class="table-primary">
                         <td colspan="2"><b>Min Sell Value</b></td>
+                        <td>{{ set.marketValue / 10 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                         <td *ngFor="let total of set.itemTotals">{{ total / 10 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                     </tr>
                 </tfoot>

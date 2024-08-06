@@ -8,22 +8,15 @@ export class ItemStatistics {
 
   public listings: Listing[];
 
-  public avgTop3: number = 0;
+  public marketValue: number = 0;
+  
+  public topAvgs: number [] = [ 0, 0, 0, 0]
 
-  public avgTop5: number = 0;
-
-  public avgTop10: number = 0;
-
-  public avgTop25: number = 0;
-
-  public avgTop50: number = 0;
-
-  public avgTop100: number = 0;
-
-  constructor(item: Item, listings: Listing[]) {
+  constructor(item: Item, listings: Listing[], marketValue: number) {
     this.id = item.id;
     this.name = item.name;
     this.listings = listings;
+    this.marketValue = marketValue;
 
     this.calcAvgs();
   }
@@ -35,28 +28,28 @@ export class ItemStatistics {
       total += this.listings[i].cost;
 
       if (i === 2) {
-        this.avgTop3 = Math.ceil(total / 3);
+        this.topAvgs[0] = Math.ceil(total / 3);
       }
 
       if (i === 4) {
-        this.avgTop5 = Math.ceil(total / 5);
+        this.topAvgs[1] = Math.ceil(total / 5);
       }
 
       if (i === 9) {
-        this.avgTop10 = Math.ceil(total / 10);
+        this.topAvgs[2] = Math.ceil(total / 10);
       }
 
       if (i === 24) {
-        this.avgTop25 = Math.ceil(total / 25);
+        this.topAvgs[3] = Math.ceil(total / 25);
       }
 
-      if (i === 49) {
-        this.avgTop50 = Math.ceil(total / 50);
-      }
+      // if (i === 49) {
+      //   this.topAvgs[4] = Math.ceil(total / 50);
+      // }
 
-      if (i === 99) {
-        this.avgTop100 = Math.ceil(total / 100);
-      }
+      // if (i === 99) {
+      //   this.topAvgs[5] = Math.ceil(total / 100);
+      // }
     }
   }
 }
