@@ -30,15 +30,17 @@
                         <th>Avg (Top 5)</th>
                         <th>Avg (Top 10)</th>
                         <th>Avg (Top 25)</th>
+                        <th>Location</th>
                     </tr>
                 </thead>
 
                 <tbody *ngIf="set.itemStatistics.length === set.items.length; else waiting">
-                    <tr *ngFor="let item of set.itemStatistics;" class="table-primary">
-                        <td>{{ item.id }}</td>
-                        <td>{{ item.name }}</td>
-                        <td>{{ item.marketValue | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        <td *ngFor="let avg of item.topAvgs">{{ avg | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                    <tr *ngFor="let itemStatistics of set.itemStatistics;" class="table-primary">
+                        <td>{{ itemStatistics.id }}</td>
+                        <td>{{ itemStatistics.name }}</td>
+                        <td>{{ itemStatistics.marketValue | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td *ngFor="let avg of itemStatistics.topAvgs">{{ avg | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
+                        <td>{{ findItemLocation (set, itemStatistics.id) }}</td>
                     </tr>
                 </tbody>
 
@@ -52,7 +54,8 @@
                             <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                             <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
                             <td>{{ 0 | currency : 'USD' : 'symbol' : '1.0-0' }}</td>
-                        </tr>
+                            <td>{{ findItemLocation (set, item.id) }}</td>
+                    </tr>
                     </tbody>
                 </ng-template>
 

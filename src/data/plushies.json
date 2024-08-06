@@ -2,55 +2,68 @@
   "plushies": [
     {
       "id": 186,
-      "name": "Sheep Plushie"
+      "name": "Sheep Plushie",
+      "location": "Bits n' Bobs"
     },
     {
       "id": 187,
-      "name": "Teddy Bear Plushie"
+      "name": "Teddy Bear Plushie",
+      "location": "Bits n' Bobs"
     },
     {
       "id": 215,
-      "name": "Kitten Plushie"
+      "name": "Kitten Plushie",
+      "location": "Bits n' Bobs"
     },
     {
       "id": 258,
-      "name": "Jaguar Plushie"
+      "name": "Jaguar Plushie",
+      "location": "Mexico"
     },
     {
       "id": 261,
-      "name": "Wolverine Plushie"
+      "name": "Wolverine Plushie",
+      "location": "Canada"
     },
     {
       "id": 266,
-      "name": "Nessie Plushie"
+      "name": "Nessie Plushie",
+      "location": "UK"
     },
     {
       "id": 268,
-      "name": "Red Fox Plushie"
+      "name": "Red Fox Plushie",
+      "location": "Hawaii"
     },
     {
       "id": 269,
-      "name": "Monkey Plushie"
+      "name": "Monkey Plushie",
+      "location": "Argentina"
     },
     {
       "id": 273,
-      "name": "Chamois Plushie"
+      "name": "Chamois Plushie",
+      "location": "Switzerland"
     },
     {
       "id": 274,
-      "name": "Panda Plushie"
+      "name": "Panda Plushie",
+      "location": "China"
     },
     {
       "id": 281,
-      "name": "Lion Plushie"
+      "name": "Lion Plushie",
+      "location": "South Africa"
     },
     {
       "id": 384,
-      "name": "Camel Plushie"
+      "name": "Camel Plushie",
+      "location": "UAE"
     },
     {
       "id": 618,
-      "name": "Stingray Plushie"
+      "name": "Stingray Plushie",
+      "location": "Cayman Islands"
     }
   ]
 }

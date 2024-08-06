@@ -234,4 +234,8 @@ export class SetDisplayComponent implements OnInit {
   public calculateSetProfitPercent (set: number [], index: number) : number {
     return this.calculateSetProfit (set, index) / this.pointSetValue;
   }
+
+  public findItemLocation (set: ItemSet, id: number) : string {
+    return set.items.find(i => i.id === id)?.location || "Unknown Item";
+  }
 }
